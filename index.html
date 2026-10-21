@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dheera's 6th Birthday – RSVP</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== CONFIG: paste your Supabase values in the <script> below ===== */
+  :root{
+    --sky:#2bb8f0; --sky-deep:#1a9fd6; --grass:#6cbf3a; --grass-dark:#4f9e26;
+    --sun:#ffe45c; --pink:#f07db4; --pink-deep:#d9579a; --orange:#f7a325;
+    --purple:#a98bd9; --ink:#2d2a3a; --card:#ffffff; --muted:#6b6880; --line:#e4e1ee;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  html{background:var(--grass)}
+  body{
+    font-family:'Fredoka',system-ui,sans-serif; color:var(--ink);
+    background:linear-gradient(var(--sky) 0%, #6fd0f5 55%, var(--grass) 55%);
+    background-attachment:fixed; min-height:100vh; overflow-x:hidden;
+  }
+  .scene{position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden}
+  .scene svg{position:absolute}
+  .bunting{top:0; left:0; width:100%; height:110px}
+  .sun{top:90px; right:6%; width:90px; height:90px; animation:spin 40s linear infinite}
+  .cloud{fill:#fff; opacity:.95}
+  .c1{top:150px; left:-40px; width:170px; animation:drift 38s linear infinite}
+  .c2{top:240px; left:-60px; width:120px; animation:drift 52s linear infinite; animation-delay:-20s}
+  .hills{bottom:0; left:0; width:100%; height:42vh}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes drift{from{transform:translateX(0)} to{transform:translateX(115vw)}}
+  @media (prefers-reduced-motion:reduce){.sun,.cloud{animation:none}}
+
+  main{position:relative; z-index:1; max-width:520px; margin:0 auto; padding:120px 16px 48px}
+  h1{
+    text-align:center; margin:0; font-weight:700; line-height:1.05;
+    font-size:clamp(2.4rem,11vw,3.6rem); color:#8be04e;
+    -webkit-text-stroke:2px #fff; paint-order:stroke fill;
+    text-shadow:0 4px 0 rgba(0,0,0,.08);
+  }
+  .sub{
+    text-align:center; margin:.2rem 0 1.4rem; font-weight:700;
+    font-size:clamp(1.4rem,6.5vw,2rem); color:var(--orange);
+    -webkit-text-stroke:1.5px #fff; paint-order:stroke fill;
+  }
+  .card{
+    background:var(--card); border-radius:28px; padding:22px 20px 24px;
+    box-shadow:0 10px 0 rgba(0,0,0,.08), 0 20px 40px rgba(0,0,0,.12);
+  }
+  .details{display:grid; gap:10px; margin-bottom:20px}
+  .detail{display:flex; gap:12px; align-items:flex-start; background:#f6f3fc; border-radius:16px; padding:10px 14px}
+  .dot{flex:none; width:34px; height:34px; border-radius:50%; display:grid; place-items:center; color:#fff; font-weight:700; font-size:.95rem}
+  .detail b{display:block; font-weight:600}
+  .detail span{color:var(--muted); font-size:.95rem}
+
+  form{display:grid; gap:16px}
+  label{font-weight:600; display:block; margin-bottom:6px}
+  .hint{font-weight:400; color:var(--muted); font-size:.88rem}
+  input,textarea{
+    width:100%; font:inherit; font-size:1rem; color:var(--ink);
+    border:2px solid var(--line); border-radius:14px; padding:12px 14px; background:#fff;
+  }
+  input:focus,textarea:focus{outline:none; border-color:var(--sky)}
+  textarea{resize:vertical; min-height:84px}
+  .choice{position:relative; display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  .choice input{position:absolute; left:0; top:0; width:1px; height:1px; margin:0; opacity:0; pointer-events:none}
+  .choice label{
+    margin:0; text-align:center; padding:12px; border-radius:14px; cursor:pointer;
+    border:2px solid var(--line); font-weight:600; transition:all .15s;
+  }
+  .choice input:checked + label.yes{background:var(--grass); border-color:var(--grass-dark); color:#fff}
+  .choice input:checked + label.no{background:var(--pink); border-color:var(--pink-deep); color:#fff}
+  .choice input:focus-visible + label{outline:3px solid var(--sky); outline-offset:2px}
+  .counts{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  .stepper{display:flex; align-items:center; border:2px solid var(--line); border-radius:14px; overflow:hidden}
+  .stepper button{flex:none; width:44px; height:46px; border:0; background:#f6f3fc; font:inherit; font-size:1.3rem; cursor:pointer; color:var(--ink)}
+  .stepper input{border:0; text-align:center; padding:0; height:46px; border-radius:0; -moz-appearance:textfield}
+  .stepper input::-webkit-inner-spin-button{-webkit-appearance:none}
+  [hidden]{display:none!important}
+
+  .btn{
+    font:inherit; font-weight:600; font-size:1.1rem; border:0; cursor:pointer;
+    border-radius:999px; padding:14px 20px; width:100%; color:#fff;
+    background:var(--orange); box-shadow:0 5px 0 #d9861a; transition:transform .1s, box-shadow .1s;
+  }
+  .btn:active{transform:translateY(3px); box-shadow:0 2px 0 #d9861a}
+  .btn[disabled]{opacity:.6; cursor:wait}
+  .btn.alt{background:var(--sky); box-shadow:0 5px 0 var(--sky-deep)}
+  .btn.ghost{background:#fff; color:var(--ink); border:2px solid var(--line); box-shadow:none; text-decoration:none; display:block; text-align:center}
+  .err{color:#c0264f; font-size:.95rem; min-height:1em; margin:0}
+  .done{text-align:center}
+  .done h2{margin:.2rem 0 .4rem; font-size:1.8rem; color:var(--grass-dark)}
+  .done p{color:var(--muted); margin:0 0 18px}
+  .done .actions{display:grid; gap:12px}
+  .confetti{font-size:3rem; line-height:1}
+  footer{text-align:center; color:#fff; font-size:.85rem; margin-top:18px; text-shadow:0 1px 2px rgba(0,0,0,.25)}
+</style>
+</head>
+<body>
+
+<div class="scene" aria-hidden="true">
+  <svg class="bunting" viewBox="0 0 1000 110" preserveAspectRatio="none">
+    <path d="M0 10 Q500 90 1000 10" fill="none" stroke="#fff" stroke-width="3"/>
+    <g id="flags"></g>
+  </svg>
+  <svg class="sun" viewBox="0 0 100 100">
+    <g stroke="#ffe45c" stroke-width="5" stroke-linecap="round">
+      <line x1="50" y1="4" x2="50" y2="16"/><line x1="50" y1="84" x2="50" y2="96"/>
+      <line x1="4" y1="50" x2="16" y2="50"/><line x1="84" y1="50" x2="96" y2="50"/>
+      <line x1="17" y1="17" x2="26" y2="26"/><line x1="74" y1="74" x2="83" y2="83"/>
+      <line x1="17" y1="83" x2="26" y2="74"/><line x1="74" y1="26" x2="83" y2="17"/>
+    </g>
+    <circle cx="50" cy="50" r="24" fill="#ffe45c"/>
+  </svg>
+  <svg class="cloud c1" viewBox="0 0 170 70"><path d="M30 60a22 22 0 0 1 4-43 30 30 0 0 1 56-6 24 24 0 0 1 44 10 20 20 0 0 1 6 39z"/></svg>
+  <svg class="cloud c2" viewBox="0 0 170 70"><path d="M30 60a22 22 0 0 1 4-43 30 30 0 0 1 56-6 24 24 0 0 1 44 10 20 20 0 0 1 6 39z"/></svg>
+  <svg class="hills" viewBox="0 0 1000 400" preserveAspectRatio="none">
+    <path d="M0 120 Q250 0 520 110 T1000 80 V400 H0z" fill="#8ccf4d"/>
+    <path d="M0 200 Q300 90 600 190 T1000 170 V400 H0z" fill="#6cbf3a"/>
+  </svg>
+</div>
+
+<main>
+  <h1>Dheera’s</h1>
+  <p class="sub">6th Birthday Party</p>
+
+  <div class="card">
+    <div class="details">
+      <div class="detail"><div class="dot" style="background:var(--pink)">📅</div><div><b>Saturday 21 November</b><span>11am – 1pm</span></div></div>
+      <div class="detail"><div class="dot" style="background:var(--purple)">📍</div><div><b>Sensory Play Centre</b><span>Unit 2/14 Barretta Rd, Ravenhall VIC 3023</span></div></div>
+      <div class="detail"><div class="dot" style="background:var(--orange)">✉️</div><div><b>Please RSVP by 7 November</b><span>Food &amp; drinks provided</span></div></div>
+    </div>
+
+    <form id="rsvp" novalidate>
+      <div>
+        <label for="name">Your name <span class="hint">(and your child’s)</span></label>
+        <input id="name" name="name" autocomplete="name" maxlength="100" required placeholder="e.g. Priya &amp; Arjun">
+      </div>
+
+      <div>
+        <label>Can you come?</label>
+        <div class="choice">
+          <input type="radio" id="yes" name="attending" value="yes" checked><label for="yes" class="yes">Yes, we’ll be there! 🎉</label>
+          <input type="radio" id="no" name="attending" value="no"><label for="no" class="no">Sorry, can’t make it</label>
+        </div>
+      </div>
+
+      <div id="countsWrap">
+        <div class="counts">
+          <div>
+            <label for="children">Children</label>
+            <div class="stepper"><button type="button" data-step="-1" data-for="children" aria-label="Fewer children">−</button><input id="children" type="number" inputmode="numeric" min="0" max="20" value="1"><button type="button" data-step="1" data-for="children" aria-label="More children">+</button></div>
+          </div>
+          <div>
+            <label for="adults">Adults</label>
+            <div class="stepper"><button type="button" data-step="-1" data-for="adults" aria-label="Fewer adults">−</button><input id="adults" type="number" inputmode="numeric" min="0" max="20" value="1"><button type="button" data-step="1" data-for="adults" aria-label="More adults">+</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="allergyWrap">
+        <label for="allergies">Food allergies <span class="hint">(optional)</span></label>
+        <input id="allergies" maxlength="500" placeholder="e.g. nuts, dairy">
+      </div>
+
+      <div>
+        <label for="message">Message <span class="hint">(optional)</span></label>
+        <textarea id="message" maxlength="1000" placeholder="A note for Dheera or the family"></textarea>
+      </div>
+
+      <div id="phoneWrap">
+        <label for="phone">Phone number <span class="hint">— please enter your number if you need a calendar invite</span></label>
+        <input id="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" placeholder="04xx xxx xxx">
+      </div>
+
+      <p class="err" id="err" role="alert"></p>
+      <button class="btn" id="submit" type="submit">Send RSVP</button>
+    </form>
+
+    <div class="done" id="done" hidden>
+      <div class="confetti">🎈</div>
+      <h2 id="doneTitle">Thank you!</h2>
+      <p id="doneMsg">Your RSVP has been received. See you at the party!</p>
+      <div class="actions" id="calActions">
+        <button class="btn alt" id="ics" type="button">Add to my calendar</button>
+        <a class="btn ghost" id="gcal" target="_blank" rel="noopener">Add to Google Calendar</a>
+      </div>
+    </div>
+  </div>
+  <footer>Made with love for Dheera’s big day</footer>
+</main>
+
+<script>
+  // ===== CONFIG =====
+  const SUPABASE_URL = "https://YOUR-PROJECT-REF.supabase.co";   // Project Settings → API → Project URL
+  const SUPABASE_KEY = "YOUR-PUBLISHABLE-OR-ANON-KEY";            // Project Settings → API Keys → publishable (or legacy anon) key
+
+  const EVENT = {
+    title: "Dheera's 6th Birthday Party",
+    location: "Sensory Play Centre, Unit 2/14 Barretta Rd, Ravenhall VIC 3023",
+    details: "Food & drinks provided. Please let us know about any food allergies.",
+    startUTC: "20261121T000000Z",   // 11:00 AEDT
+    endUTC:   "20261121T020000Z"    // 13:00 AEDT
+  };
+
+  // Bunting flags
+  (function(){
+    const g = document.getElementById('flags');
+    const cols = ['#f07db4','#ffe45c','#a98bd9','#2bd4c0','#f7a325'];
+    const n = 22;
+    for(let i=0;i<n;i++){
+      const x = (i+0.5)*(1000/n), t = x/1000;
+      const y = (1-t)*(1-t)*10 + 2*(1-t)*t*90 + t*t*10;
+      const w = 1000/n*0.42;
+      const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d',`M${x-w} ${y} L${x+w} ${y} L${x} ${y+30}z`);
+      p.setAttribute('fill', cols[i%cols.length]);
+      g.appendChild(p);
+    }
+  })();
+
+  const $ = id => document.getElementById(id);
+  const form = $('rsvp');
+
+  // Steppers
+  document.querySelectorAll('[data-step]').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const inp = $(b.dataset.for);
+      inp.value = Math.max(0, Math.min(20, (parseInt(inp.value)||0) + Number(b.dataset.step)));
+    });
+  });
+
+  // Hide counts/allergies/phone if not attending
+  form.attending.forEach(r=>r.addEventListener('change',()=>{
+    const going = form.attending.value === 'yes';
+    ['countsWrap','allergyWrap','phoneWrap'].forEach(id=>$(id).hidden = !going);
+  }));
+
+  form.addEventListener('submit', async e=>{
+    e.preventDefault();
+    const err = $('err'); err.textContent = '';
+    const going = form.attending.value === 'yes';
+    const clampN = v => Math.max(0, Math.min(20, parseInt(v)||0));
+    const row = {
+      guest_name: $('name').value.trim(),
+      attending: going,
+      adults:   going ? clampN($('adults').value)   : 0,
+      children: going ? clampN($('children').value) : 0,
+      allergies: going ? ($('allergies').value.trim() || null) : null,
+      message: $('message').value.trim() || null,
+      phone:   going ? ($('phone').value.trim() || null) : null
+    };
+    if(!row.guest_name){ err.textContent = 'Please enter your name.'; $('name').focus(); return; }
+    if(going && row.adults + row.children === 0){ err.textContent = 'Please tell us how many are coming.'; return; }
+
+    const btn = $('submit'); btn.disabled = true; btn.textContent = 'Sending…';
+    try{
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/rsvps`, {
+        method:'POST',
+        headers:{ 'apikey':SUPABASE_KEY, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
+        body: JSON.stringify(row)
+      });
+      if(!res.ok) throw new Error(await res.text());
+      form.hidden = true; $('done').hidden = false;
+      if(!going){
+        $('doneTitle').textContent = 'Thanks for letting us know';
+        $('doneMsg').textContent = 'We’ll miss you — thank you for replying.';
+        $('calActions').hidden = true;
+      }
+      $('done').scrollIntoView({behavior:'smooth', block:'center'});
+    }catch(ex){
+      console.error(ex);
+      err.textContent = 'Sorry, something went wrong. Please try again in a moment.';
+      btn.disabled = false; btn.textContent = 'Send RSVP';
+    }
+  });
+
+  // Calendar
+  $('gcal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+    + '&text=' + encodeURIComponent(EVENT.title)
+    + '&dates=' + EVENT.startUTC + '/' + EVENT.endUTC
+    + '&location=' + encodeURIComponent(EVENT.location)
+    + '&details=' + encodeURIComponent(EVENT.details);
+
+  $('ics').addEventListener('click',()=>{
+    const esc = s => s.replace(/([,;\\])/g,'\\$1');
+    const ics = [
+      'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Dheera Party//RSVP//EN','METHOD:PUBLISH','BEGIN:VEVENT',
+      'UID:dheera-6th-birthday-20261121@rsvp',
+      'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z',
+      'DTSTART:' + EVENT.startUTC, 'DTEND:' + EVENT.endUTC,
+      'SUMMARY:' + esc(EVENT.title), 'LOCATION:' + esc(EVENT.location), 'DESCRIPTION:' + esc(EVENT.details),
+      'BEGIN:VALARM','TRIGGER:-P1D','ACTION:DISPLAY','DESCRIPTION:Reminder','END:VALARM',
+      'END:VEVENT','END:VCALENDAR'
+    ].join('\r\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));
+    a.download = 'dheera-birthday.ics'; a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+  });
+</script>
+</body>
+</html>
