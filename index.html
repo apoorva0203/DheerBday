@@ -172,11 +172,6 @@
         <textarea id="message" maxlength="1000" placeholder="A note for Dheera or the family"></textarea>
       </div>
 
-      <div id="phoneWrap">
-        <label for="phone">Phone number <span class="hint">— please enter your number if you need a calendar invite</span></label>
-        <input id="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" placeholder="04xx xxx xxx">
-      </div>
-
       <p class="err" id="err" role="alert"></p>
       <button class="btn" id="submit" type="submit">Send RSVP</button>
     </form>
@@ -234,10 +229,10 @@
     });
   });
 
-  // Hide counts/allergies/phone if not attending
+  // Hide counts/allergies if not attending
   form.attending.forEach(r=>r.addEventListener('change',()=>{
     const going = form.attending.value === 'yes';
-    ['countsWrap','allergyWrap','phoneWrap'].forEach(id=>$(id).hidden = !going);
+    ['countsWrap','allergyWrap'].forEach(id=>$(id).hidden = !going);
   }));
 
   form.addEventListener('submit', async e=>{
@@ -251,8 +246,7 @@
       adults:   going ? clampN($('adults').value)   : 0,
       children: going ? clampN($('children').value) : 0,
       allergies: going ? ($('allergies').value.trim() || null) : null,
-      message: $('message').value.trim() || null,
-      phone:   going ? ($('phone').value.trim() || null) : null
+      message: $('message').value.trim() || null
     };
     if(!row.guest_name){ err.textContent = 'Please enter your name.'; $('name').focus(); return; }
     if(going && row.adults + row.children === 0){ err.textContent = 'Please tell us how many are coming.'; return; }
