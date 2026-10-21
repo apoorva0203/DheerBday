@@ -130,7 +130,7 @@
 
   <div class="card">
     <div class="details">
-      <div class="detail"><div class="dot" style="background:var(--pink)">📅</div><div><b>Saturday 21 November</b><span>11am – 1pm</span></div></div>
+      <div class="detail"><div class="dot" style="background:var(--pink)">📅</div><div><b>Sunday 22 November</b><span>11am – 1pm</span></div></div>
       <div class="detail"><div class="dot" style="background:var(--purple)">📍</div><div><b>Sensory Play Centre</b><span>Unit 2/14 Barretta Rd, Ravenhall VIC 3023</span></div></div>
       <div class="detail"><div class="dot" style="background:var(--orange)">✉️</div><div><b>Please RSVP by 7 November</b><span>Food &amp; drinks provided</span></div></div>
     </div>
@@ -198,8 +198,8 @@
     title: "Dheera's 6th Birthday Party",
     location: "Sensory Play Centre, Unit 2/14 Barretta Rd, Ravenhall VIC 3023",
     details: "Food & drinks provided. Please let us know about any food allergies.",
-    startUTC: "20261121T000000Z",   // 11:00 AEDT
-    endUTC:   "20261121T020000Z"    // 13:00 AEDT
+    startUTC: "20261122T000000Z",   // 11:00 AEDT
+    endUTC:   "20261122T020000Z"    // 13:00 AEDT
   };
 
   // Bunting flags
@@ -284,7 +284,7 @@
     const esc = s => s.replace(/([,;\\])/g,'\\$1');
     const ics = [
       'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Dheera Party//RSVP//EN','METHOD:PUBLISH','BEGIN:VEVENT',
-      'UID:dheera-6th-birthday-20261121@rsvp',
+      'UID:dheera-6th-birthday-20261122@rsvp',
       'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z',
       'DTSTART:' + EVENT.startUTC, 'DTEND:' + EVENT.endUTC,
       'SUMMARY:' + esc(EVENT.title), 'LOCATION:' + esc(EVENT.location), 'DESCRIPTION:' + esc(EVENT.details),
