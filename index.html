@@ -229,6 +229,13 @@
     });
   });
 
+  // RSVPs close at the end of 7 Nov (AEDT)
+  if(Date.now() >= Date.parse('2026-11-08T00:00:00+11:00')){
+    form.hidden = true; $('done').hidden = false;
+    $('doneTitle').textContent = 'RSVPs have closed';
+    $('doneMsg').textContent = 'Please send me a text to let me know if you can come.';
+  }
+
   // Hide counts/allergies if not attending
   form.attending.forEach(r=>r.addEventListener('change',()=>{
     const going = form.attending.value === 'yes';
